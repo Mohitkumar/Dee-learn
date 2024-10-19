@@ -65,7 +65,7 @@ class BatchNorm1d(Layer):
       xvar = x.var(0, keepdim=True) # batch variance
     else:
       xmean = self.running_mean
-      xvar = self.running_var
+      xvar = self.running_var 
     xhat = (x - xmean) / torch.sqrt(xvar + self.eps) # normalize to unit variance
     self.out = self.gamma * xhat + self.beta
     # update the buffers

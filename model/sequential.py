@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import torch
 import matplotlib.pyplot as plt
 from  layers.linear import Tanh, Relu, Sigmoid
+
 class Sequential:
     def __init__(self, layers: List[Layer]) -> None:
         self.layers = layers
@@ -61,6 +62,6 @@ class Sequential:
                 print('layer %d (%10s): mean %+.2f, std %.2f, saturated: %.2f%%' % (i, layer.__class__.__name__, t.mean(), t.std(), (t.abs() > 0.97).float().mean()*100))
                 hy, hx = torch.histogram(t, density=True)
                 plt.plot(hx[:-1].detach(), hy.detach())
-                legends.append(f'layer {i} ({layer.__class__.__name__}')
+                legends.append(f'layer {i} ({layer.__class__.__name__}')      
         plt.legend(legends);
         plt.title('activation distribution')        
