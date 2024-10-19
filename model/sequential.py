@@ -64,4 +64,18 @@ class Sequential:
                 plt.plot(hx[:-1].detach(), hy.detach())
                 legends.append(f'layer {i} ({layer.__class__.__name__}')      
         plt.legend(legends);
-        plt.title('activation distribution')        
+        plt.title('activation distribution') 
+
+
+    def plot_weight_gradient_distribution(self):
+        plt.figure(figsize=(20, 4)) # width and height of the plot
+        legends = []
+        for i,p in enumerate(self.parameters):
+            t = p.grad
+            if p.ndim == 2:
+                print('weight %10s | mean %+f | std %e | grad:data ratio %e' % (tuple(p.shape), t.mean(), t.std(), t.std() / p.std()))
+                hy, hx = torch.histogram(t, density=True)
+                plt.plot(hx[:-1].detach(), hy.detach())
+                legends.append(f'{i} {tuple(p.shape)}')
+        plt.legend(legends)
+        plt.title('weights gradient distribution');    
